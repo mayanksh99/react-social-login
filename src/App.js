@@ -1,20 +1,16 @@
 import React, { useState } from "react";
-import "./App.css";
-// import SocialButton from "./SocialButton";
+import { Route, Redirect, Switch } from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
-import { LinkedIn } from "react-linkedin-login-oauth2";
+import { LinkedInPopUp } from "react-linkedin-login-oauth2";
+import LinkedInPage from "./LinkedInPage";
+import "./App.css";
 
 function App() {
   const [state, setState] = useState({ isloggedIn: false, user: "" });
-  // const handleSocialLogin = user => {
-  //   console.log("user", user._profile);
-  //   setState({ isloggedIn: true, user: user._profile });
+  // const handleFailure = err => {
+  //   console.error(err);
   // };
-
-  const handleFailure = err => {
-    console.error(err);
-  };
 
   const handleLogout = () => {
     setState({ isloggedIn: false, user: "" });
@@ -36,10 +32,11 @@ function App() {
           <div>
             <FacebookLogin
               appId="1763913083744541"
-              autoLoad={true}
+              // autoLoad={true}
               fields="name,email,picture"
               callback={responseFacebook}
             />
+            <br></br>
             <br></br>
             <GoogleLogin
               clientId="805194883716-hqmtmdffp68a10tl323nd3eplrblnb9h.apps.googleusercontent.com"
@@ -65,6 +62,14 @@ function App() {
             </button>
           </div>
         )}
+        <div>
+          <Switch>
+            <Switch>
+              <Route exact path="/linkedin" component={LinkedInPopUp} />
+              <Route path="/" component={LinkedInPage} />
+            </Switch>
+          </Switch>
+        </div>
       </div>
     </>
   );
